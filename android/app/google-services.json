@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "88072338229",
+    "firebase_url": "https://farm-tech-701cc.firebaseio.com",
+    "project_id": "farm-tech-701cc",
+    "storage_bucket": "farm-tech-701cc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:88072338229:android:6ed502826a47643cdc2a7c",
+        "android_client_info": {
+          "package_name": "com.example.farm_tech"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "88072338229-520ms1picb57mtjolh0t6ajagvfc3tqt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDdzJeQfIDSdYqFiIoUcGOAg_Sq3FCuXeI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "88072338229-520ms1picb57mtjolh0t6ajagvfc3tqt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
