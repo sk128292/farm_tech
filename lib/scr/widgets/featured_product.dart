@@ -1,36 +1,11 @@
 import 'package:farm_tech/scr/helpers/commans.dart';
 import 'package:farm_tech/scr/helpers/screen_navigation.dart';
-import 'package:farm_tech/scr/models/products.dart';
+import 'package:farm_tech/scr/models/product_model.dart';
 import 'package:farm_tech/scr/screens/details.dart';
 import 'package:farm_tech/scr/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 
-List<Product> productList = [
-  Product(
-      name: 'Apple',
-      price: '200',
-      qty: '5 kg',
-      image: 'a.jpg',
-      available: false),
-  Product(
-      name: 'Grapes',
-      price: '200',
-      qty: '5 kg',
-      image: 'b.jpg',
-      available: true),
-  Product(
-      name: 'Lychee',
-      price: '200',
-      qty: '5 kg',
-      image: 'c.jpg',
-      available: true),
-  Product(
-      name: 'Apple',
-      price: '200',
-      qty: '5 kg',
-      image: 'a.jpg',
-      available: false),
-];
+List<ProductModel> productList = [];
 
 class Featured extends StatelessWidget {
   @override
@@ -90,7 +65,7 @@ class Featured extends StatelessWidget {
                             ),
                             child: Padding(
                               padding: const EdgeInsets.all(4),
-                              child: productList[index].available
+                              child: productList[index].featured
                                   ? Icon(
                                       Icons.local_grocery_store,
                                       color: Colors.green,
@@ -112,13 +87,14 @@ class Featured extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: CustomText(
-                            text: ('RS. ' + productList[index].price),
+                            text:
+                                ('RS. ' + productList[index].price.toString()),
                           ),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: CustomText(
-                            text: productList[index].qty,
+                            text: productList[index].qty.toString(),
                             weight: FontWeight.bold,
                           ),
                         )

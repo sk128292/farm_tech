@@ -1,6 +1,6 @@
 import 'package:farm_tech/scr/helpers/commans.dart';
 import 'package:farm_tech/scr/helpers/screen_navigation.dart';
-import 'package:farm_tech/scr/providers/auth_provider.dart';
+import 'package:farm_tech/scr/providers/user_provider.dart';
 import 'package:farm_tech/scr/screens/home.dart';
 import 'package:farm_tech/scr/screens/login.dart';
 import 'package:farm_tech/scr/widgets/custom_text.dart';
@@ -17,7 +17,7 @@ class _RegistrationState extends State<Registration> {
   final _key = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
-    final authProvider = Provider.of<AuthProvider>(context);
+    final authProvider = Provider.of<UserProvider>(context);
     return Scaffold(
       key: _key,
       backgroundColor: white,

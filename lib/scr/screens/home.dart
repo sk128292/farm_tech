@@ -1,13 +1,14 @@
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:farm_tech/scr/helpers/commans.dart';
 import 'package:farm_tech/scr/helpers/screen_navigation.dart';
+import 'package:farm_tech/scr/providers/category_provider.dart';
+import 'package:farm_tech/scr/providers/user_provider.dart';
 import 'package:farm_tech/scr/screens/bag.dart';
 import 'package:farm_tech/scr/widgets/ad.dart';
-import 'package:farm_tech/scr/widgets/botton_navigation_icons.dart';
-import 'package:farm_tech/scr/widgets/categories.dart';
 import 'package:farm_tech/scr/widgets/custom_text.dart';
 import 'package:farm_tech/scr/widgets/featured_product.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -17,64 +18,140 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
+    final authProvider = Provider.of<UserProvider>(context);
+    final categoryProvider = Provider.of<CategoryProvider>(context);
+
     return Scaffold(
+      appBar: AppBar(
+        iconTheme: IconThemeData(color: white),
+        elevation: 0.5,
+        backgroundColor: black,
+        title: CustomText(
+          text: "Farm Tech",
+          colors: white,
+        ),
+        actions: [
+          Stack(
+            children: [
+              IconButton(
+                icon: Icon(Icons.shopping_basket),
+                onPressed: () {
+                  changeScreen(context, ShoppingBag());
+                },
+              ),
+              Positioned(
+                top: 12,
+                right: 12,
+                child: Container(
+                  height: 10,
+                  width: 10,
+                  decoration: BoxDecoration(
+                      color: green, borderRadius: BorderRadius.circular(20)),
+                ),
+              )
+            ],
+          ),
+          Stack(
+            children: [
+              IconButton(
+                icon: Icon(Icons.notifications_none),
+                onPressed: () {},
+              ),
+              Positioned(
+                top: 12,
+                right: 12,
+                child: Container(
+                  height: 10,
+                  width: 10,
+                  decoration: BoxDecoration(
+                      color: green, borderRadius: BorderRadius.circular(20)),
+                ),
+              )
+            ],
+          ),
+        ],
+      ),
+      drawer: Drawer(
+        child: ListView(
+          children: [
+            UserAccountsDrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.orange,
+              ),
+              accountName: CustomText(
+                text: authProvider.userModel?.name ?? "username loading...",
+                colors: white,
+                weight: FontWeight.bold,
+                size: 18,
+              ),
+              accountEmail: CustomText(
+                text: authProvider.userModel?.email ?? "email loading...",
+                colors: grey,
+                weight: FontWeight.bold,
+              ),
+            ),
+            ListTile(
+              onTap: () {},
+              leading: Icon(Icons.home),
+              title: CustomText(text: "Home", align: TextAlign.left),
+            ),
+            ListTile(
+              onTap: () {},
+              leading: Icon(Icons.person),
+              title: CustomText(text: "Account", align: TextAlign.left),
+            ),
+            ListTile(
+              onTap: () {
+                changeScreen(context, ShoppingBag());
+              },
+              leading: Icon(Icons.shopping_cart),
+              title: CustomText(text: "Cart", align: TextAlign.left),
+            ),
+            ListTile(
+              onTap: () {},
+              leading: Icon(Icons.bookmark_border),
+              title: CustomText(text: "My Order", align: TextAlign.left),
+            ),
+            ListTile(
+              onTap: () {},
+              leading: Icon(Icons.logout),
+              title: CustomText(text: "Log Out", align: TextAlign.left),
+            ),
+          ],
+        ),
+      ),
       backgroundColor: white,
       body: SafeArea(
         child: ListView(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: CustomText(
-                    text: 'What would you like.',
-                    size: 18,
-                  ),
+            Container(
+              decoration: BoxDecoration(
+                  color: black,
+                  borderRadius: BorderRadius.only(
+                      bottomRight: Radius.circular(20),
+                      bottomLeft: Radius.circular(20))),
+              child: Padding(
+                padding: const EdgeInsets.only(
+                  top: 8,
+                  left: 8,
+                  right: 8,
+                  bottom: 15,
                 ),
-                Stack(
-                  children: [
-                    IconButton(
-                      icon: Icon(Icons.notifications_none),
-                      onPressed: () {},
-                    ),
-                    Positioned(
-                      top: 12,
-                      right: 12,
-                      child: Container(
-                        height: 10,
-                        width: 10,
-                        decoration: BoxDecoration(
-                            color: red,
-                            borderRadius: BorderRadius.circular(20)),
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: white,
+                  ),
+                  child: ListTile(
+                    leading: Icon(Icons.search, color: red),
+                    title: TextField(
+                      decoration: InputDecoration(
+                        hintText: 'Find What you want',
+                        border: InputBorder.none,
                       ),
-                    )
-                  ],
-                ),
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: white,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey[300],
-                      offset: Offset(1, 1),
-                      blurRadius: 4,
                     ),
-                  ],
-                ),
-                child: ListTile(
-                  leading: Icon(Icons.search, color: red),
-                  title: TextField(
-                    decoration: InputDecoration(
-                      hintText: 'Find What you want',
-                      border: InputBorder.none,
-                    ),
+                    trailing: Icon(Icons.filter_list, color: red),
                   ),
-                  trailing: Icon(Icons.filter_list, color: red),
                 ),
               ),
             ),
@@ -100,7 +177,77 @@ class _HomeState extends State<Home> {
                 animationDuration: Duration(seconds: 2),
               ),
             ),
-            Categories(),
+            Container(
+              height: 162,
+              child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: categoryProvider.categories.length,
+                  itemBuilder: (context, index) {
+                    return Column(
+                      children: [
+                        Stack(
+                          children: <Widget>[
+                            Container(
+                              color: Colors.transparent,
+                              margin: EdgeInsets.only(
+                                  left: 2, right: 5, top: 7, bottom: 5),
+                              child: Material(
+                                color: Colors.transparent,
+                                child: InkWell(
+                                  onTap: () {},
+                                  child: Padding(
+                                    padding: EdgeInsets.all(0),
+                                    child: Column(
+                                      children: <Widget>[
+                                        Container(
+                                          color: Colors.transparent,
+                                          width: 130,
+                                          height: 150,
+                                          child: ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(7),
+                                            child: Image.network(
+                                              categoryProvider
+                                                  .categories[index].image,
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Positioned(
+                              width: 135,
+                              bottom: 1.0,
+                              height: 50,
+                              // left: 0.0,
+                              // right: 1.0,
+                              child: Card(
+                                color: Colors.black.withOpacity(0.37),
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                    top: 10.0,
+                                  ),
+                                  child: CustomText(
+                                    text: categoryProvider
+                                            .categories[index]?.name ??
+                                        "loading",
+                                    colors: white,
+                                    size: 17,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    );
+                  }),
+            ),
+            // Categories(),
             // SizedBox(height: 5),
             Advertise(),
             Padding(
@@ -108,32 +255,6 @@ class _HomeState extends State<Home> {
               child: CustomText(text: 'Featured', size: 20, colors: grey),
             ),
             Featured(),
-          ],
-        ),
-      ),
-      bottomNavigationBar: Container(
-        color: white,
-        height: 55,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            BottomNavIcon(
-              onTap: () {},
-              image: "home.png",
-              name: 'Home',
-            ),
-            BottomNavIcon(
-              onTap: () {
-                changeScreen(context, ShoppingBag());
-              },
-              image: "bag.png",
-              name: 'Bag',
-            ),
-            BottomNavIcon(
-              onTap: () {},
-              image: "person.png",
-              name: 'Account',
-            ),
           ],
         ),
       ),

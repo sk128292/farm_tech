@@ -1,11 +1,11 @@
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:farm_tech/scr/helpers/commans.dart';
-import 'package:farm_tech/scr/models/products.dart';
+import 'package:farm_tech/scr/models/product_model.dart';
 import 'package:farm_tech/scr/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 
 class Details extends StatefulWidget {
-  final Product product;
+  final ProductModel product;
 
   const Details({@required this.product});
 
@@ -80,7 +80,7 @@ class _DetailsState extends State<Details> {
             weight: FontWeight.bold,
           ),
           CustomText(
-            text: widget.product.price,
+            text: widget.product.price.toString(),
             size: 26,
             weight: FontWeight.w600,
             colors: red,
