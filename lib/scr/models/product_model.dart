@@ -9,31 +9,33 @@ class ProductModel {
   static const FEATURED = "featured";
   static const QTY = "qty";
 
-  String _id;
+  int _id;
   String _name;
   String _image;
-  double _price;
+  int _price;
   String _category;
   bool _featured;
-  double _qty;
+  int _qty;
 
   // getter
 
-  String get id => _id;
+  int get id => _id;
   String get name => _name;
   String get image => _image;
   String get category => _category;
-  double get price => _price;
-  double get qty => _qty;
-  bool get featured => _featured;
+  int get price => _price;
+  int get qty => _qty;
+  bool get featured => _featured ?? false;
+
+  // bool featured = _featured;
 
   ProductModel.fromSnapshot(DocumentSnapshot snapshot) {
-    _id = snapshot.get(ID);
-    _name = snapshot.get(NAME);
-    _image = snapshot.get(IMAGE);
-    _category = snapshot.get(CATEGORY);
-    _price = snapshot.get(PRICE);
-    _qty = snapshot.get(QTY);
-    _featured = snapshot.get(FEATURED);
+    _id = snapshot.data()[id];
+    _name = snapshot.data()[NAME];
+    _image = snapshot.data()[IMAGE];
+    _category = snapshot.data()[CATEGORY];
+    _price = snapshot.data()[price];
+    _qty = snapshot.data()[qty];
+    _featured = snapshot.data()[featured];
   }
 }

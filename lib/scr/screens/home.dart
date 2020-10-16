@@ -1,10 +1,10 @@
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:farm_tech/scr/helpers/commans.dart';
 import 'package:farm_tech/scr/helpers/screen_navigation.dart';
-import 'package:farm_tech/scr/providers/category_provider.dart';
 import 'package:farm_tech/scr/providers/user_provider.dart';
 import 'package:farm_tech/scr/screens/bag.dart';
 import 'package:farm_tech/scr/widgets/ad.dart';
+import 'package:farm_tech/scr/widgets/categories.dart';
 import 'package:farm_tech/scr/widgets/custom_text.dart';
 import 'package:farm_tech/scr/widgets/featured_product.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +19,6 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     final authProvider = Provider.of<UserProvider>(context);
-    final categoryProvider = Provider.of<CategoryProvider>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -126,10 +125,11 @@ class _HomeState extends State<Home> {
           children: [
             Container(
               decoration: BoxDecoration(
-                  color: black,
-                  borderRadius: BorderRadius.only(
-                      bottomRight: Radius.circular(20),
-                      bottomLeft: Radius.circular(20))),
+                color: black,
+                // borderRadius: BorderRadius.only(
+                //     bottomRight: Radius.circular(20),
+                //     bottomLeft: Radius.circular(20))
+              ),
               child: Padding(
                 padding: const EdgeInsets.only(
                   top: 8,
@@ -177,77 +177,7 @@ class _HomeState extends State<Home> {
                 animationDuration: Duration(seconds: 2),
               ),
             ),
-            Container(
-              height: 162,
-              child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: categoryProvider.categories.length,
-                  itemBuilder: (context, index) {
-                    return Column(
-                      children: [
-                        Stack(
-                          children: <Widget>[
-                            Container(
-                              color: Colors.transparent,
-                              margin: EdgeInsets.only(
-                                  left: 2, right: 5, top: 7, bottom: 5),
-                              child: Material(
-                                color: Colors.transparent,
-                                child: InkWell(
-                                  onTap: () {},
-                                  child: Padding(
-                                    padding: EdgeInsets.all(0),
-                                    child: Column(
-                                      children: <Widget>[
-                                        Container(
-                                          color: Colors.transparent,
-                                          width: 130,
-                                          height: 150,
-                                          child: ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(7),
-                                            child: Image.network(
-                                              categoryProvider
-                                                  .categories[index].image,
-                                              fit: BoxFit.cover,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Positioned(
-                              width: 135,
-                              bottom: 1.0,
-                              height: 50,
-                              // left: 0.0,
-                              // right: 1.0,
-                              child: Card(
-                                color: Colors.black.withOpacity(0.37),
-                                child: Padding(
-                                  padding: const EdgeInsets.only(
-                                    top: 10.0,
-                                  ),
-                                  child: CustomText(
-                                    text: categoryProvider
-                                            .categories[index]?.name ??
-                                        "loading",
-                                    colors: white,
-                                    size: 17,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    );
-                  }),
-            ),
-            // Categories(),
+            Categories(),
             // SizedBox(height: 5),
             Advertise(),
             Padding(

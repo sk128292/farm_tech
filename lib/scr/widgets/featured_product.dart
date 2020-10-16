@@ -1,26 +1,29 @@
 import 'package:farm_tech/scr/helpers/commans.dart';
 import 'package:farm_tech/scr/helpers/screen_navigation.dart';
-import 'package:farm_tech/scr/models/product_model.dart';
+import 'package:farm_tech/scr/providers/product_provider.dart';
 import 'package:farm_tech/scr/screens/details.dart';
 import 'package:farm_tech/scr/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
-
-List<ProductModel> productList = [];
+import 'package:provider/provider.dart';
 
 class Featured extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final productProvider = Provider.of<ProductProvider>(context);
+    print(
+        "Total No of Products = " + productProvider.products.length.toString());
     return Container(
       height: 240,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
-        itemCount: productList.length,
+        itemCount: productProvider.products.length,
         itemBuilder: (_, index) {
           return Padding(
             padding: const EdgeInsets.all(8.0),
             child: GestureDetector(
               onTap: () {
-                changeScreen(_, Details(product: productList[index]));
+                changeScreen(
+                    _, Details(product: productProvider.products[index]));
               },
               child: Container(
                 height: 220,
@@ -37,8 +40,8 @@ class Featured extends StatelessWidget {
                 ),
                 child: Column(
                   children: [
-                    Image.asset(
-                      'images/${productList[index].image}',
+                    Image.network(
+                      productProvider.products[index].image,
                       height: 140,
                       width: 140,
                     ),
@@ -47,7 +50,8 @@ class Featured extends StatelessWidget {
                       children: [
                         Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: CustomText(text: '${productList[index].name}'),
+                          child: CustomText(
+                              text: productProvider.products[index].name),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
@@ -65,7 +69,7 @@ class Featured extends StatelessWidget {
                             ),
                             child: Padding(
                               padding: const EdgeInsets.all(4),
-                              child: productList[index].featured
+                              child: productProvider.products[index].featured
                                   ? Icon(
                                       Icons.local_grocery_store,
                                       color: Colors.green,
@@ -87,14 +91,15 @@ class Featured extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: CustomText(
-                            text:
-                                ('RS. ' + productList[index].price.toString()),
+                            text: ("RS. " +
+                                "${productProvider.products[index].price}"),
                           ),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: CustomText(
-                            text: productList[index].qty.toString(),
+                            text:
+                                productProvider.products[index].qty.toString(),
                             weight: FontWeight.bold,
                           ),
                         )

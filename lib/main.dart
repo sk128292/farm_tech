@@ -1,4 +1,5 @@
 import 'package:farm_tech/scr/providers/category_provider.dart';
+import 'package:farm_tech/scr/providers/product_provider.dart';
 import 'package:farm_tech/scr/providers/user_provider.dart';
 import 'package:farm_tech/scr/screens/home.dart';
 import 'package:farm_tech/scr/screens/login.dart';
@@ -15,6 +16,7 @@ Future<void> main() async {
       providers: [
         ChangeNotifierProvider.value(value: UserProvider.initialize()),
         ChangeNotifierProvider.value(value: CategoryProvider.initialize()),
+        ChangeNotifierProvider.value(value: ProductProvider.initialize()),
       ],
       child: MaterialApp(
         title: 'Farm Tech',
