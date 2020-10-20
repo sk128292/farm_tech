@@ -10,8 +10,7 @@ class Featured extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final productProvider = Provider.of<ProductProvider>(context);
-    print(
-        "Total No of Products = " + productProvider.products.length.toString());
+    print("Total No of Products = " + productProvider.products.toString());
     return Container(
       height: 240,
       child: ListView.builder(
@@ -91,15 +90,13 @@ class Featured extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: CustomText(
-                            text: ("RS. " +
-                                "${productProvider.products[index].price}"),
+                            text: productProvider.products[index].price,
                           ),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: CustomText(
-                            text:
-                                productProvider.products[index].qty.toString(),
+                            text: productProvider.products[index].qty,
                             weight: FontWeight.bold,
                           ),
                         )

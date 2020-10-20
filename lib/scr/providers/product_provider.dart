@@ -5,13 +5,20 @@ import 'package:flutter/material.dart';
 class ProductProvider with ChangeNotifier {
   ProductServices _productServices = ProductServices();
   List<ProductModel> products = [];
+  List<ProductModel> productsByCategory = [];
 
   ProductProvider.initialize() {
-    _loadProducts();
+    loadProducts();
   }
 
-  _loadProducts() async {
+  loadProducts() async {
     products = await _productServices.getProducts();
+    notifyListeners();
+  }
+
+  Future loadProductsByCategory({String categoryName}) async {
+    productsByCategory =
+        await _productServices.getProductsOfCategory(category: categoryName);
     notifyListeners();
   }
 }

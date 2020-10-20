@@ -12,10 +12,10 @@ class ProductModel {
   int _id;
   String _name;
   String _image;
-  int _price;
+  String _price;
   String _category;
   bool _featured;
-  int _qty;
+  String _qty;
 
   // getter
 
@@ -23,8 +23,8 @@ class ProductModel {
   String get name => _name;
   String get image => _image;
   String get category => _category;
-  int get price => _price;
-  int get qty => _qty;
+  String get price => _price;
+  String get qty => _qty;
   bool get featured => _featured ?? false;
 
   // bool featured = _featured;
@@ -34,8 +34,8 @@ class ProductModel {
     _name = snapshot.data()[NAME];
     _image = snapshot.data()[IMAGE];
     _category = snapshot.data()[CATEGORY];
-    _price = snapshot.data()[price];
-    _qty = snapshot.data()[qty];
+    _price = snapshot.data()[PRICE];
+    _qty = snapshot.data()[QTY];
     _featured = snapshot.data()[featured];
   }
 }

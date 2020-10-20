@@ -1,8 +1,11 @@
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:farm_tech/scr/helpers/commans.dart';
 import 'package:farm_tech/scr/helpers/screen_navigation.dart';
+import 'package:farm_tech/scr/providers/category_provider.dart';
+import 'package:farm_tech/scr/providers/product_provider.dart';
 import 'package:farm_tech/scr/providers/user_provider.dart';
 import 'package:farm_tech/scr/screens/bag.dart';
+import 'package:farm_tech/scr/screens/category_product_screen.dart';
 import 'package:farm_tech/scr/widgets/ad.dart';
 import 'package:farm_tech/scr/widgets/categories.dart';
 import 'package:farm_tech/scr/widgets/custom_text.dart';
@@ -19,6 +22,8 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     final authProvider = Provider.of<UserProvider>(context);
+    final categoryProvider = Provider.of<CategoryProvider>(context);
+    final productProvider = Provider.of<ProductProvider>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -177,7 +182,32 @@ class _HomeState extends State<Home> {
                 animationDuration: Duration(seconds: 2),
               ),
             ),
-            Categories(),
+            Container(
+              height: 162,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: categoryProvider.categories.length,
+                itemBuilder: (_, index) {
+                  return GestureDetector(
+                    onTap: () async {
+                      await productProvider.loadProductsByCategory(
+                          categoryName:
+                              categoryProvider.categories[index].name);
+                      changeScreen(
+                        context,
+                        CategoryProductScreen(
+                          categoryModel: categoryProvider.categories[index],
+                        ),
+                      );
+                    },
+                    child: Categories(
+                      category: categoryProvider.categories[index],
+                    ),
+                  );
+                },
+              ),
+            ),
+            // Categories(),
             // SizedBox(height: 5),
             Advertise(),
             Padding(
