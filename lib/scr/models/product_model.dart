@@ -12,10 +12,10 @@ class ProductModel {
   int _id;
   String _name;
   String _image;
-  String _price;
+  int _price;
   String _category;
   bool _featured;
-  String _qty;
+  int _qty;
 
   // getter
 
@@ -23,19 +23,19 @@ class ProductModel {
   String get name => _name;
   String get image => _image;
   String get category => _category;
-  String get price => _price;
-  String get qty => _qty;
+  int get price => _price;
+  int get qty => _qty;
   bool get featured => _featured ?? false;
 
   // bool featured = _featured;
 
   ProductModel.fromSnapshot(DocumentSnapshot snapshot) {
-    _id = snapshot.data()[id];
+    _id = snapshot.data()[ID];
     _name = snapshot.data()[NAME];
     _image = snapshot.data()[IMAGE];
     _category = snapshot.data()[CATEGORY];
     _price = snapshot.data()[PRICE];
     _qty = snapshot.data()[QTY];
-    _featured = snapshot.data()[featured];
+    _featured = snapshot.data()[FEATURED];
   }
 }

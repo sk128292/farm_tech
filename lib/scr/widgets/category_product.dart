@@ -1,7 +1,5 @@
 import 'package:farm_tech/scr/models/product_model.dart';
-import 'package:farm_tech/scr/providers/product_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class CategoryProduct extends StatelessWidget {
   final ProductModel product;
@@ -42,7 +40,7 @@ class CategoryProduct extends StatelessWidget {
                           width: 190,
                           child: DropdownButton(
                             isExpanded: true,
-                            disabledHint: Text(product.qty),
+                            disabledHint: Text(product.qty.toString()),
                             items: null,
                             onChanged: null,
                           ),
@@ -55,14 +53,14 @@ class CategoryProduct extends StatelessWidget {
                         Column(
                           children: <Widget>[
                             Text(
-                              product.price,
+                              product.price.toString(),
                               style: TextStyle(
                                   decoration: TextDecoration.lineThrough,
                                   color: Colors.red,
                                   fontSize: 13),
                             ),
                             Text(
-                              product.price,
+                              product.price.toString(),
                               style:
                                   TextStyle(color: Colors.green, fontSize: 15),
                             )

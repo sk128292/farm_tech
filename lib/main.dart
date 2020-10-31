@@ -1,3 +1,4 @@
+import 'package:farm_tech/scr/providers/app_provider.dart';
 import 'package:farm_tech/scr/providers/category_provider.dart';
 import 'package:farm_tech/scr/providers/product_provider.dart';
 import 'package:farm_tech/scr/providers/user_provider.dart';
@@ -14,6 +15,7 @@ Future<void> main() async {
   runApp(
     MultiProvider(
       providers: [
+        ChangeNotifierProvider.value(value: AppProvider()),
         ChangeNotifierProvider.value(value: UserProvider.initialize()),
         ChangeNotifierProvider.value(value: CategoryProvider.initialize()),
         ChangeNotifierProvider.value(value: ProductProvider.initialize()),

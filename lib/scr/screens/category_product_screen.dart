@@ -1,6 +1,8 @@
 import 'package:farm_tech/scr/helpers/commans.dart';
+import 'package:farm_tech/scr/helpers/screen_navigation.dart';
 import 'package:farm_tech/scr/models/category_model.dart';
 import 'package:farm_tech/scr/providers/product_provider.dart';
+import 'package:farm_tech/scr/screens/details.dart';
 import 'package:farm_tech/scr/widgets/category_product.dart';
 import 'package:farm_tech/scr/widgets/custom_text.dart';
 import 'package:farm_tech/scr/widgets/loading.dart';
@@ -99,7 +101,9 @@ class CategoryProductScreen extends StatelessWidget {
             Column(
               children: productProvider.productsByCategory
                   .map((item) => GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          changeScreen(context, Details(product: item));
+                        },
                         child: CategoryProduct(product: item),
                       ))
                   .toList(),

@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:farm_tech/scr/models/product_model.dart';
 import 'package:farm_tech/scr/models/user_model.dart';
 import 'package:farm_tech/scr/services/user_services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:uuid/uuid.dart';
 
 enum Status { Uninitialized, Authenticated, Authenticating, Unauthenticated }
 
@@ -85,6 +87,10 @@ class UserProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> reloadUserModel() async {
+    _userModel = await _userServices.getUserById(user.uid);
+    notifyListeners();
+  }
   // general Methods..
 
   bool _onError(String error) {
@@ -98,5 +104,52 @@ class UserProvider with ChangeNotifier {
     email.text = "";
     password.text = "";
     name.text = "";
+  }
+
+  Future<bool> addToCart({ProductModel product, int qty}) async {
+    print("The Product Is : ${product.toString()} ");
+    print("The Qty Is : ${qty.toString()} ");
+    try {
+      var uuid = Uuid();
+      String cartItemId = uuid.v4();
+      List cart = _userModel.cart;
+      // bool itemExists = false;
+      Map cartItem = {
+        "id": cartItemId,
+        "name": product.name,
+        "image": product.image,
+        "productId": product.id,
+        "price": product.price,
+        "qty": product.qty,
+      };
+      // for (Map item in cart) {
+      //   if (item["productId"] == cartItem["productId"]) {
+      //     item["qty"] = item["qty"] + qty;
+      //     itemExists = true;
+      //     break;
+      //   }
+      // }
+      // if (!itemExists) {
+      print("Cart Items Are : ${cart.toString()}");
+      _userServices.addToCart(userId: _user.uid, cartItem: cartItem);
+      // }
+
+      return true;
+    } catch (e) {
+      print("The error ${e.toString()}");
+      return false;
+    }
+  }
+
+  Future<bool> removeFromCart({Map cartItem}) async {
+    print("The Product Is : ${cartItem.toString()} ");
+    try {
+      _userServices.removeFromCart(userId: _user.uid, cartItem: cartItem);
+
+      return true;
+    } catch (e) {
+      print("The error ${e.toString()}");
+      return false;
+    }
   }
 }

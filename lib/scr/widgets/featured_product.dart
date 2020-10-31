@@ -90,13 +90,15 @@ class Featured extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: CustomText(
-                            text: productProvider.products[index].price,
+                            text: productProvider.products[index].price
+                                .toString(),
                           ),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: CustomText(
-                            text: productProvider.products[index].qty,
+                            text:
+                                productProvider.products[index].qty.toString(),
                             weight: FontWeight.bold,
                           ),
                         )

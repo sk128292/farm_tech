@@ -1,11 +1,13 @@
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:farm_tech/scr/helpers/commans.dart';
 import 'package:farm_tech/scr/helpers/screen_navigation.dart';
+import 'package:farm_tech/scr/providers/app_provider.dart';
 import 'package:farm_tech/scr/providers/category_provider.dart';
 import 'package:farm_tech/scr/providers/product_provider.dart';
 import 'package:farm_tech/scr/providers/user_provider.dart';
-import 'package:farm_tech/scr/screens/bag.dart';
+import 'package:farm_tech/scr/screens/cart_screen.dart';
 import 'package:farm_tech/scr/screens/category_product_screen.dart';
+import 'package:farm_tech/scr/screens/product_searched_screen.dart';
 import 'package:farm_tech/scr/widgets/ad.dart';
 import 'package:farm_tech/scr/widgets/categories.dart';
 import 'package:farm_tech/scr/widgets/custom_text.dart';
@@ -21,6 +23,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
+    final app = Provider.of<AppProvider>(context);
     final authProvider = Provider.of<UserProvider>(context);
     final categoryProvider = Provider.of<CategoryProvider>(context);
     final productProvider = Provider.of<ProductProvider>(context);
@@ -40,37 +43,9 @@ class _HomeState extends State<Home> {
               IconButton(
                 icon: Icon(Icons.shopping_basket),
                 onPressed: () {
-                  changeScreen(context, ShoppingBag());
+                  changeScreen(context, CartScreen());
                 },
               ),
-              Positioned(
-                top: 12,
-                right: 12,
-                child: Container(
-                  height: 10,
-                  width: 10,
-                  decoration: BoxDecoration(
-                      color: green, borderRadius: BorderRadius.circular(20)),
-                ),
-              )
-            ],
-          ),
-          Stack(
-            children: [
-              IconButton(
-                icon: Icon(Icons.notifications_none),
-                onPressed: () {},
-              ),
-              Positioned(
-                top: 12,
-                right: 12,
-                child: Container(
-                  height: 10,
-                  width: 10,
-                  decoration: BoxDecoration(
-                      color: green, borderRadius: BorderRadius.circular(20)),
-                ),
-              )
             ],
           ),
         ],
@@ -106,7 +81,7 @@ class _HomeState extends State<Home> {
             ),
             ListTile(
               onTap: () {
-                changeScreen(context, ShoppingBag());
+                changeScreen(context, CartScreen());
               },
               leading: Icon(Icons.shopping_cart),
               title: CustomText(text: "Cart", align: TextAlign.left),
@@ -150,6 +125,13 @@ class _HomeState extends State<Home> {
                   child: ListTile(
                     leading: Icon(Icons.search, color: red),
                     title: TextField(
+                      textInputAction: TextInputAction.search,
+                      onSubmitted: (pattern) async {
+                        app.changeLoading();
+                        await productProvider.search(productName: pattern);
+                        changeScreen(context, ProductSearchedScreen());
+                        app.changeLoading();
+                      },
                       decoration: InputDecoration(
                         hintText: 'Find What you want',
                         border: InputBorder.none,
