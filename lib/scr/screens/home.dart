@@ -7,11 +7,13 @@ import 'package:farm_tech/scr/providers/product_provider.dart';
 import 'package:farm_tech/scr/providers/user_provider.dart';
 import 'package:farm_tech/scr/screens/cart_screen.dart';
 import 'package:farm_tech/scr/screens/category_product_screen.dart';
+import 'package:farm_tech/scr/screens/order.dart';
 import 'package:farm_tech/scr/screens/product_searched_screen.dart';
 import 'package:farm_tech/scr/widgets/ad.dart';
 import 'package:farm_tech/scr/widgets/categories.dart';
 import 'package:farm_tech/scr/widgets/custom_text.dart';
 import 'package:farm_tech/scr/widgets/featured_product.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -23,6 +25,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<UserProvider>(context);
     final app = Provider.of<AppProvider>(context);
     final authProvider = Provider.of<UserProvider>(context);
     final categoryProvider = Provider.of<CategoryProvider>(context);
@@ -87,7 +90,10 @@ class _HomeState extends State<Home> {
               title: CustomText(text: "Cart", align: TextAlign.left),
             ),
             ListTile(
-              onTap: () {},
+              onTap: () async {
+                await user.getOrders();
+                changeScreen(context, OrderScreen());
+              },
               leading: Icon(Icons.bookmark_border),
               title: CustomText(text: "My Order", align: TextAlign.left),
             ),

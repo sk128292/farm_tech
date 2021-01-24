@@ -39,7 +39,9 @@ class UserModel {
     for (Map cartItem in cart) {
       _priceSum += cartItem["price"] * cartItem["qty"];
     }
+
     int total = _priceSum;
+
     print("the Total is: $total");
     print("the Total is: $total");
     print("the Total is: $total");

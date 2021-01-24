@@ -102,6 +102,7 @@ class _DetailsState extends State<Details> {
                           product: widget.product, qty: qty);
                       if (value) {
                         print("Item Added to cart");
+                        // ignore: deprecated_member_use
                         _key.currentState.showSnackBar(
                           SnackBar(content: Text("Added to Cart")),
                         );

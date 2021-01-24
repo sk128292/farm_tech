@@ -82,6 +82,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: GestureDetector(
                       onTap: () async {
                         if (!await authProvider.signIn()) {
+                          // ignore: deprecated_member_use
                           _key.currentState.showSnackBar(
                             SnackBar(content: Text("Login failed! ")),
                           );

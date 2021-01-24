@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:farm_tech/scr/models/order_model.dart';
 import 'package:farm_tech/scr/models/product_model.dart';
 import 'package:farm_tech/scr/models/user_model.dart';
 import 'package:farm_tech/scr/services/user_services.dart';
+import 'package:farm_tech/scr/services/order_services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
@@ -14,6 +16,7 @@ class UserProvider with ChangeNotifier {
   Status _status = Status.Uninitialized;
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
   UserServices _userServices = UserServices();
+  OrderServices _orderServices = OrderServices();
   UserModel _userModel;
 
   // getters
@@ -21,6 +24,10 @@ class UserProvider with ChangeNotifier {
   Status get status => _status;
   UserModel get userModel => _userModel;
   User get user => _user;
+
+  // public variables
+
+  List<OrderModel> orders = [];
 
   final formKey = GlobalKey<FormState>();
 
@@ -139,6 +146,11 @@ class UserProvider with ChangeNotifier {
       print("The error ${e.toString()}");
       return false;
     }
+  }
+
+  getOrders() async {
+    orders = await _orderServices.getUserOrders(userId: _user.uid);
+    notifyListeners();
   }
 
   Future<bool> removeFromCart({Map cartItem}) async {
