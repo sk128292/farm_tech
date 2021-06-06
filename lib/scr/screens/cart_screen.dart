@@ -260,7 +260,7 @@ class _CartScreenState extends State<CartScreen> {
                                                       cartItem: cartItem);
                                               if (value) {
                                                 user.reloadUserModel();
-                                                print("Item Added to cart");
+                                                print("Item Removed to cart");
                                                 // ignore: deprecated_member_use
                                                 _key.currentState.showSnackBar(
                                                   SnackBar(

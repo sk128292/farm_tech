@@ -13,7 +13,6 @@ import 'package:farm_tech/scr/widgets/ad.dart';
 import 'package:farm_tech/scr/widgets/categories.dart';
 import 'package:farm_tech/scr/widgets/custom_text.dart';
 import 'package:farm_tech/scr/widgets/featured_product.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
